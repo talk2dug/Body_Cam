@@ -1,4 +1,4 @@
-var mainServer = require('socket.io-client')('http://192.168.86.89:3000');
+var mainServer = require('socket.io-client')('http://192.168.196.163:3000');
 var moment = require('moment');
 mainServer.on('connect', function(){
     console.log("CONNECTED");

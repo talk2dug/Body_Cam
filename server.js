@@ -4,7 +4,7 @@ mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
 var fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm:ss");
-var name = fileNameTImeStamp + ".mp4" + "|http://208.113.164.242:3000/publish"
+var name = fileNameTImeStamp + ".mp4"
 var spawn=require('child_process').spawn
 , child=null;
     mainServer.on('bodyCam', function(data){

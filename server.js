@@ -7,7 +7,21 @@ mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
 var fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm");
-var name = fileNameTImeStamp + ".mp4"
+var name = 'BC_' + fileNameTImeStamp + ".mp4"
+var options = {
+    file: '/home/jack/bodycam/' + name,
+    user: 'jack',
+    host: '192.168.196.163',
+    port: '22',
+    path: '/home/jack/videos'
+  }
+  function transfertoMaster(){
+    scp.send(options, function (err) {
+        if (err) console.log(err);
+        else console.log('File transferred.');
+      });
+
+  }
 var spawn=require('child_process').spawn
 , child=null;
     mainServer.on('bodyCam', function(data){
@@ -32,18 +46,9 @@ var spawn=require('child_process').spawn
     }
     if(data==="STOP"){
         child.kill('SIGINT');
-        var options = {
-            file: name,
-            user: 'jack',
-            host: '192.168.196.163',
-            port: '22',
-            path: '/home/jack/videos'
-          }
+        transfertoMaster();
            
-          scp.send(options, function (err) {
-            if (err) console.log(err);
-            else console.log('File transferred.');
-          });
+          
     }
     });
 

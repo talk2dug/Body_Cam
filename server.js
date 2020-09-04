@@ -19,6 +19,7 @@ var options = {
     scp.send(options, function (err) {
         if (err) console.log(err);
         else console.log('File transferred.');
+        
       });
 
   }

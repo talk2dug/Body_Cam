@@ -1,5 +1,8 @@
 var mainServer = require('socket.io-client')('http://192.168.196.163:3000');
 var moment = require('moment');
+var scp = require('scp');
+ 
+
 mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
@@ -29,6 +32,18 @@ var spawn=require('child_process').spawn
     }
     if(data==="STOP"){
         child.kill('SIGINT');
+        var options = {
+            file: name,
+            user: 'jack',
+            host: '192.168.196.163',
+            port: '22',
+            path: '/home/jack/videos'
+          }
+           
+          scp.send(options, function (err) {
+            if (err) console.log(err);
+            else console.log('File transferred.');
+          });
     }
     });
 

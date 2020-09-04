@@ -3,7 +3,7 @@ var moment = require('moment');
 mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
-var fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm:ss");
+var fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm");
 var name = fileNameTImeStamp + ".mp4"
 var spawn=require('child_process').spawn
 , child=null;

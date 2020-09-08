@@ -2,10 +2,10 @@ var scp = require('scp');
  
 var options = {
   file: '/home/jack/bodycam/*.mp4',
-  user: 'jack',
-  host: '192.168.196.163',
+  user: 'admin',
+  host: '192.168.196.51',
   port: '22',
-  path: '/home/jack/videos'
+  path: '/home/admin/videos'
 }
  
 scp.send(options, function (err) {

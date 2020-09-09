@@ -6,8 +6,10 @@ var scp = require('scp');
 mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
-var fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm");
-var name = 'BC_' + fileNameTImeStamp + ".mp4"
+var fileNameTImeStamp;
+var name;
+fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm:ss");
+    name = 'BC_' + fileNameTImeStamp + ".mp4"
 var options = {
     file: '/home/jack/bodycam/' + name,
     user: 'jack',
@@ -16,6 +18,7 @@ var options = {
     path: '/home/jack/videos'
   }
   function transfertoMaster(){
+    
     scp.send(options, function (err) {
         if (err) console.log(err);
         else console.log('File transferred.');
@@ -28,6 +31,8 @@ var spawn=require('child_process').spawn
     mainServer.on('bodyCam', function(data){
         console.log("40:  " + data)
     if(data==="START"){
+        fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm");
+        name = 'BC_' + fileNameTImeStamp + ".mp4"
         child=spawn("ffmpeg", [
             "-ar", "44100", "-ac", "1", 
             "-f", "alsa",

@@ -31,7 +31,7 @@ var spawn=require('child_process').spawn
     mainServer.on('bodyCam', function(data){
         console.log("40:  " + data)
     if(data==="START"){
-        fileNameTImeStamp = moment().format("YYYY-MM-DD_HH:mm");
+        fileNameTImeStamp = moment().format("YYYY-MM-DD_HHmm");
         name = 'BC_' + fileNameTImeStamp + ".mp4"
         child=spawn("ffmpeg", [
             "-ar", "44100", "-ac", "1", 

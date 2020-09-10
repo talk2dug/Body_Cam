@@ -3,9 +3,12 @@ var moment = require('moment');
 var scp = require('scp');
 var geolib = require('geolib');
 var GPS = require('./node_modules/gps/gps.js');
+var angles = require('angles');
 var fileNameTImeStamp;
 var name;
-
+var prevLAT;
+var prevLON;
+var GPSarray = []
 mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
@@ -74,7 +77,8 @@ var spawn=require('child_process').spawn
     
     
     
-    
+    var tripA;
+    var tripB;
     
     function parseGPS(data) {
         var lat = data.state.lat;
@@ -101,12 +105,13 @@ var spawn=require('child_process').spawn
     }
     const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
     parser.on('data', function(data) {
+        
         gps.update(data);
-        parseGPS(gps);
+        //parseGPS(gps);
     })
     function calculateHeading(lon, lat) {
         var Heading = 0;
-        var angles = require('angles');
+        
         Heading = GPS.Heading(prevLAT, prevLAT, lat, lon);
         Heading = Heading.toFixed(0)
         prevLAT = lat;
@@ -114,7 +119,7 @@ var spawn=require('child_process').spawn
         return Heading;
     }
     gps.on('GGA', function(data) {
-        console.log(data)
+        
         var headingDir = calculateHeading(data.lon, data.lat)
         GPSarray['lon'] = data.lon
         GPSarray['lat'] = data.lat
@@ -127,8 +132,9 @@ var spawn=require('child_process').spawn
         } else {
             var pos = {'lon': data.lon,'lat': data.lat}
         }
-    
-        //mainServer.emit('gps', GPSarray)
+        //console.log(data)
+        mainServer.emit('bodyCamgps', data)
+
         //dreamHost.emit('gpsData', GPSarray)
         //io.emit('state', GPSarray);
     });

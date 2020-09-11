@@ -132,7 +132,7 @@ var spawn=require('child_process').spawn
         } else {
             var pos = {'lon': data.lon,'lat': data.lat}
         }
-        //console.log(data)
+        console.log(data)
         mainServer.emit('bodyCamgps', data)
 
         //dreamHost.emit('gpsData', GPSarray)

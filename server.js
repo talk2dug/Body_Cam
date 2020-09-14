@@ -43,6 +43,7 @@ var spawn=require('child_process').spawn
             "-f", "alsa",
              "-i", "hw:1", 
             "-f", "v4l2", 
+            "-vf", "transpose=2",
             "-c:v", "h264", "-r", "30", 
             "-s", "1280x720", "-itsoffset", "0.5",
              "-i", "/dev/video0",

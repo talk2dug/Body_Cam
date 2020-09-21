@@ -47,7 +47,9 @@ var spawn=require('child_process').spawn
             "-s", "1280x720", "-itsoffset", "0.5",
              "-i", "/dev/video0",
              "-copyinkf", "-codec:v", "copy", "-codec:a", "aac", 
-             "-ab", "128k", "-g", "10", name
+             "-ab", "128k", "-g", "10", 
+             "-f", "flv", "rtmp://192.168.196.123/live/BodyCam",
+             name
             ]);
             child.stdout.pipe(process.stdout);
             child.stderr.pipe(process.stdout);

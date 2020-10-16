@@ -13,9 +13,13 @@ mainServer.on('connect', function(){
     console.log("CONNECTED");
     });
 
-
+    var spawn=require('child_process').spawn
+    , child=null
+    , child7=null;;
   function transfertoMaster(){
-    fileNameTImeStamp = moment().format("YYYY-MM-DD_HHmm");
+   
+    
+    fileNameTImeStamp = moment().format("YYYY-MM-DD-HHmm");
     name = 'BC_' + fileNameTImeStamp + ".mp4"
     var options = {
         file: '/home/jack/bodycam/*.mp4',
@@ -28,14 +32,19 @@ mainServer.on('connect', function(){
     scp.send(options, function (err) {
         if (err) console.log(err);
         else console.log('File transferred.');
-        var spawn=require('child_process').spawn
-, child=null;
-child=spawn("rm", ["*mp4"]);
-      });
+        
+child7=spawn("rm", ["*mp4"]);
+    
 
-  }
-var spawn=require('child_process').spawn
-, child=null;
+ 
+  child7.stdout.pipe(process.stdout);
+  child7.stderr.pipe(process.stdout);
+  child7.on('exit', function () {
+  console.log("7 exited") 
+  });
+});
+}
+
     mainServer.on('bodyCam', function(data){
         console.log("40:  " + data)
     if(data==="START"){
@@ -50,7 +59,8 @@ var spawn=require('child_process').spawn
             "-s", "1280x720", "-itsoffset", "0.5",
              "-i", "/dev/video0",
              "-copyinkf", "-codec:v", "copy", "-codec:a", "aac", 
-             "-ab", "128k", "-g", "10", name,
+             "-ab", "128k", "-g", "10",        
+              name,
              
              
              
@@ -60,24 +70,23 @@ var spawn=require('child_process').spawn
             child.on('exit', function () {
             console.log("exited") 
             });
-           /* setTimeout(() => {
-                child2=spawn("ffmpeg", [
-                    "-re", "-i", name, 
-                "-c:v", "libx264", "-preset", 
-                "fast", "-c:a", "libfdk_aac", 
-                "-ab", "128k", "-ar", "44100", 
-                "-f", "flv", "rtmp://192.168.196.163/live/BodyCam"
-                     
-                     
-                    ]);
-                    child2.stdout.pipe(process.stdout);
-                    child2.stderr.pipe(process.stdout);
-                    child2.on('exit', function () {
-                    console.log("exited") 
-                    });
+            //setTimeout(() => {
+            //    child2=spawn("ffmpeg", [
+                 
+            //         "-re", "-i", 
+             //        name, "-c:v", 
+            //         "copy", "-c:a copy", 
+            //         "-f", "rtsp", 
+            //         "rtsp://192.168.196.163:80/live/bodyCam"
+            //        ]);
+            //        child2.stdout.pipe(process.stdout);
+            //        child2.stderr.pipe(process.stdout);
+            //        child2.on('exit', function () {
+            //        console.log("exited") 
+            //        });
     
-            }, 5000);
-            */
+           // }, 2000);
+            
 
              
     }

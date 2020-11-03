@@ -51,6 +51,7 @@ child7=spawn("rm", ["*mp4"]);
         fileNameTImeStamp = moment().format("YYYY-MM-DD-HHmm");
         name = 'BC_' + fileNameTImeStamp + ".mp4"
         child=spawn("ffmpeg", [
+            "-hide_banner", "-loglevel", "panic",
             "-ar", "44100", "-ac", "1", 
             "-f", "alsa",
              "-i", "hw:1", 
@@ -155,7 +156,7 @@ child7=spawn("rm", ["*mp4"]);
         return Heading;
     }
     gps.on('GGA', function(data) {
-        
+        console.log(data)
         var headingDir = calculateHeading(data.lon, data.lat)
         GPSarray['lon'] = data.lon
         GPSarray['lat'] = data.lat
